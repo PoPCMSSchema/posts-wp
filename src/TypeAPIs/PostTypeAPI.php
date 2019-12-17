@@ -2,6 +2,7 @@
 namespace PoP\PostsWP\TypeAPIs;
 
 use WP_Post;
+use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
 /**
  * Methods to interact with the Type, to be implemented by the underlying CMS
  */
