@@ -315,5 +315,13 @@ class PostTypeAPI implements PostTypeAPIInterface
         ) = $this->getPostObjectAndID($postObjectOrID);
         return $post->post_author;
     }
+    public function getModifiedDate($postObjectOrID): ?string
+    {
+        list(
+            $post,
+            $postID,
+        ) = $this->getPostObjectAndID($postObjectOrID);
+        return $post->post_modified;
+    }
 
 }
