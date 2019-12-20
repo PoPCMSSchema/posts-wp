@@ -226,17 +226,17 @@ class PostTypeAPI implements PostTypeAPIInterface
     //     // Copied from `single_post_title` in wp-includes/general-template.php
     //     return HooksAPIFacade::getInstance()->applyFilters('single_post_title', $post->post_title, $post);
     // }
-    public function getSlug($post_id): ?string
+    public function getSlug($postObjectOrID): ?string
     {
-        if ($this->getStatus($post_id) == POP_POSTSTATUS_PUBLISHED) {
-            $post = $this->getPost($post_id);
+        if ($this->getStatus($postObjectOrID) == POP_POSTSTATUS_PUBLISHED) {
+            $post = $this->getPost($postObjectOrID);
             return $post->post_name;
         }
 
         // Function get_sample_permalink comes from the file below, so it must be included
         // Code below copied from `function get_sample_permalink_html`
         include_once ABSPATH.'wp-admin/includes/post.php';
-        list($permalink, $post_name) = \get_sample_permalink($post_id, null, null);
+        list($permalink, $post_name) = \get_sample_permalink($postObjectOrID, null, null);
         return $post_name;
     }
     public function getPostTitle($post_id): ?string
