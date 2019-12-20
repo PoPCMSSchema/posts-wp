@@ -307,4 +307,13 @@ class PostTypeAPI implements PostTypeAPIInterface
         ) = $this->getPostObjectAndID($postObjectOrID);
         return $post->post_date;
     }
+    public function getAuthorID($postObjectOrID)
+    {
+        list(
+            $post,
+            $postID,
+        ) = $this->getPostObjectAndID($postObjectOrID);
+        return $post->post_author;
+    }
+
 }
