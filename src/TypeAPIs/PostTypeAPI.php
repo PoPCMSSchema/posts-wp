@@ -20,6 +20,17 @@ class PostTypeAPI implements PostTypeAPIInterface
     use APITypeDataResolverTrait;
 
     /**
+     * Return the post's ID
+     *
+     * @param [type] $post
+     * @return void
+     */
+    public function getID($post)
+    {
+        return $post->ID;
+    }
+
+    /**
      * Indicates if the passed object is of type Post
      *
      * @param [type] $object
