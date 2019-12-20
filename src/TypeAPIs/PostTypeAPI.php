@@ -1,10 +1,11 @@
 <?php
 namespace PoP\PostsWP\TypeAPIs;
 
-use function get_post;
 use WP_Post;
-use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
+use function get_post;
 use PoP\Hooks\Facades\HooksAPIFacade;
+use PoP\PostsWP\TypeAPIs\PostTypeAPIUtils;
+use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
 use PoP\ComponentModel\TypeDataResolvers\APITypeDataResolverTrait;
 
 /**
@@ -54,7 +55,7 @@ class PostTypeAPI implements PostTypeAPIInterface
     public function getPostStatus($post_id)
     {
         $status = get_post_status($post_id);
-        return Utils::convertPostStatusFromCMSToPoP($status);
+        return PostTypeAPIUtils::convertPostStatusFromCMSToPoP($status);
     }
     public function getPosts($query, array $options = [])
     {
@@ -92,10 +93,10 @@ class PostTypeAPI implements PostTypeAPIInterface
         if (isset($query['post-status'])) {
             if (is_array($query['post-status'])) {
                 // doing get_posts can accept an array of values
-                $query['post_status'] = array_map([Utils::class, 'convertPostStatusFromPoPToCMS'], $query['post-status']);
+                $query['post_status'] = array_map([PostTypeAPIUtils::class, 'convertPostStatusFromPoPToCMS'], $query['post-status']);
             } else {
                 // doing wp_insert/update_post accepts a single value
-                $query['post_status'] = Utils::convertPostStatusFromPoPToCMS($query['post-status']);
+                $query['post_status'] = PostTypeAPIUtils::convertPostStatusFromPoPToCMS($query['post-status']);
             }
             unset($query['post-status']);
         }
@@ -105,7 +106,7 @@ class PostTypeAPI implements PostTypeAPIInterface
 
             // Make sure the post can also be draft or pending
             if (!isset($query['post_status'])) {
-                $query['post_status'] = Utils::getCMSPostStatuses();
+                $query['post_status'] = PostTypeAPIUtils::getCMSPostStatuses();
             }
         }
         if (isset($query['post-types'])) {
