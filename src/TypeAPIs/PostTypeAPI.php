@@ -217,9 +217,9 @@ class PostTypeAPI implements PostTypeAPIInterface
         list($permalink, $post_name) = \get_sample_permalink($postID, null, null);
         return str_replace(['%pagename%', '%postname%'], $post_name, $permalink);
     }
-    public function getExcerpt($post_id): ?string
+    public function getExcerpt($postObjectOrID): ?string
     {
-        return \get_the_excerpt($post_id);
+        return \get_the_excerpt($postObjectOrID);
     }
     protected function getPostObjectAndID($postObjectOrID): array
     {
