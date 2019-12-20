@@ -2,7 +2,11 @@
 namespace PoP\PostsWP\TypeAPIs;
 
 use WP_Post;
+use WP_Query;
 use function get_post;
+use function get_posts;
+use function get_post_status;
+use function apply_filters;
 use PoP\Hooks\Facades\HooksAPIFacade;
 use PoP\PostsWP\TypeAPIs\PostTypeAPIUtils;
 use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
@@ -52,7 +56,7 @@ class PostTypeAPI implements PostTypeAPIInterface
         return $this->getPost($id) != null;
     }
 
-    public function getPostStatus($post_id)
+    public function getPostStatus($post_id): ?string
     {
         $status = get_post_status($post_id);
         return PostTypeAPIUtils::convertPostStatusFromCMSToPoP($status);
@@ -74,7 +78,7 @@ class PostTypeAPI implements PostTypeAPIInterface
         $query = $this->convertPostsQuery($query, ['return-type' => POP_RETURNTYPE_IDS]);
 
         // Taken from https://stackoverflow.com/questions/2504311/wordpress-get-post-count
-        $wp_query = new \WP_Query();
+        $wp_query = new WP_Query();
         $wp_query->query($query);
         return $wp_query->found_posts;
     }
@@ -190,32 +194,32 @@ class PostTypeAPI implements PostTypeAPIInterface
             $query['exclude_from_search'] = $query['exclude-from-search'];
             unset($query['exclude-from-search']);
         }
-        return get_post_types($query);
+        return \get_post_types($query);
     }
 
     public function getPostType($post)
     {
-        return get_post_type($post);
+        return \get_post_type($post);
     }
-    public function getPermalink($post_id)
+    public function getPermalink($post_id): ?string
     {
         if ($this->getPostStatus($post_id) == POP_POSTSTATUS_PUBLISHED) {
-            return get_permalink($post_id);
+            return \get_permalink($post_id);
         }
 
         // Function get_sample_permalink comes from the file below, so it must be included
         // Code below copied from `function get_sample_permalink_html`
         include_once ABSPATH.'wp-admin/includes/post.php';
-        list($permalink, $post_name) = get_sample_permalink($post_id, null, null);
+        list($permalink, $post_name) = \get_sample_permalink($post_id, null, null);
         return str_replace(['%pagename%', '%postname%'], $post_name, $permalink);
     }
-    public function getExcerpt($post_id)
+    public function getExcerpt($post_id): ?string
     {
-        return get_the_excerpt($post_id);
+        return \get_the_excerpt($post_id);
     }
-    public function getTitle($post_id)
+    public function getTitle($post_id): ?string
     {
-        return get_the_title($post_id);
+        return \get_the_title($post_id);
     }
     // public function getSinglePostTitle($post)
     // {
@@ -232,16 +236,16 @@ class PostTypeAPI implements PostTypeAPIInterface
         // Function get_sample_permalink comes from the file below, so it must be included
         // Code below copied from `function get_sample_permalink_html`
         include_once ABSPATH.'wp-admin/includes/post.php';
-        list($permalink, $post_name) = get_sample_permalink($post_id, null, null);
+        list($permalink, $post_name) = \get_sample_permalink($post_id, null, null);
         return $post_name;
     }
-    public function getPostTitle($post_id)
+    public function getPostTitle($post_id): ?string
     {
         $post = $this->getPost($post_id);
         return apply_filters('the_title', $post->post_title, $post_id);
     }
 
-    public function getPostContent($post_id)
+    public function getPostContent($post_id): ?string
     {
         $post = $this->getPost($post_id);
         return apply_filters('the_content', $post->post_content);
@@ -257,7 +261,7 @@ class PostTypeAPI implements PostTypeAPIInterface
         HooksAPIFacade::getInstance()->removeFilter('the_content', array( $wp_embed, 'autoembed' ), 8);
 
         // Do not allow HTML tags or shortcodes
-        $ret = strip_shortcodes($post->post_content);
+        $ret = \strip_shortcodes($post->post_content);
         $ret = HooksAPIFacade::getInstance()->applyFilters('the_content', $ret);
         HooksAPIFacade::getInstance()->addFilter('the_content', array( $wp_embed, 'autoembed' ), 8);
 
