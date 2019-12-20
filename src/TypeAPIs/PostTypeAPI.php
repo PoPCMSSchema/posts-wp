@@ -226,7 +226,7 @@ class PostTypeAPI implements PostTypeAPIInterface
     //     // Copied from `single_post_title` in wp-includes/general-template.php
     //     return HooksAPIFacade::getInstance()->applyFilters('single_post_title', $post->post_title, $post);
     // }
-    public function getPostSlug($post_id)
+    public function getSlug($post_id): ?string
     {
         if ($this->getStatus($post_id) == POP_POSTSTATUS_PUBLISHED) {
             $post = $this->getPost($post_id);
