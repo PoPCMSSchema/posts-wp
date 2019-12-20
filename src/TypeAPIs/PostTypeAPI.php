@@ -228,6 +228,18 @@ class PostTypeAPI implements PostTypeAPIInterface
         }
         return apply_filters('the_title', $post->post_title, $post_id);
     }
+
+    public function getContent($postObjectOrID): ?string
+    {
+        if (is_object($postObjectOrID)) {
+            $post = $postObjectOrID;
+            $post_id = $post->ID;
+        }  else {
+            $post_id = $postObjectOrID;
+            $post = get_post($post_id);
+        }
+        return apply_filters('the_content', $post->post_content);
+    }
     // public function getSinglePostTitle($post)
     // {
     //     // Copied from `single_post_title` in wp-includes/general-template.php
@@ -245,12 +257,6 @@ class PostTypeAPI implements PostTypeAPIInterface
         include_once ABSPATH.'wp-admin/includes/post.php';
         list($permalink, $post_name) = \get_sample_permalink($postObjectOrID, null, null);
         return $post_name;
-    }
-
-    public function getPostContent($post_id): ?string
-    {
-        $post = $this->getPost($post_id);
-        return apply_filters('the_content', $post->post_content);
     }
 
     public function getBasicPostContent($post_id)
