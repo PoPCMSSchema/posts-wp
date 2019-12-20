@@ -201,43 +201,56 @@ class PostTypeAPI implements PostTypeAPIInterface
     {
         return \get_post_type($post);
     }
-    public function getPermalink($post_id): ?string
+    public function getPermalink($postObjectOrID): ?string
     {
-        if ($this->getStatus($post_id) == POP_POSTSTATUS_PUBLISHED) {
-            return \get_permalink($post_id);
+        list(
+            $post,
+            $postID,
+        ) = $this->getPostObjectAndID($postObjectOrID);
+        if ($this->getStatus($postObjectOrID) == POP_POSTSTATUS_PUBLISHED) {
+            return \get_permalink($postID);
         }
 
         // Function get_sample_permalink comes from the file below, so it must be included
         // Code below copied from `function get_sample_permalink_html`
         include_once ABSPATH.'wp-admin/includes/post.php';
-        list($permalink, $post_name) = \get_sample_permalink($post_id, null, null);
+        list($permalink, $post_name) = \get_sample_permalink($postID, null, null);
         return str_replace(['%pagename%', '%postname%'], $post_name, $permalink);
     }
     public function getExcerpt($post_id): ?string
     {
         return \get_the_excerpt($post_id);
     }
-    public function getTitle($postObjectOrID): ?string
+    protected function getPostObjectAndID($postObjectOrID): array
     {
         if (is_object($postObjectOrID)) {
             $post = $postObjectOrID;
-            $post_id = $post->ID;
+            $postID = $post->ID;
         }  else {
-            $post_id = $postObjectOrID;
-            $post = get_post($post_id);
+            $postID = $postObjectOrID;
+            $post = get_post($postID);
         }
-        return apply_filters('the_title', $post->post_title, $post_id);
+        return [
+            $post,
+            $postID,
+        ];
+    }
+
+    public function getTitle($postObjectOrID): ?string
+    {
+        list(
+            $post,
+            $postID,
+        ) = $this->getPostObjectAndID($postObjectOrID);
+        return apply_filters('the_title', $post->post_title, $postID);
     }
 
     public function getContent($postObjectOrID): ?string
     {
-        if (is_object($postObjectOrID)) {
-            $post = $postObjectOrID;
-            $post_id = $post->ID;
-        }  else {
-            $post_id = $postObjectOrID;
-            $post = get_post($post_id);
-        }
+        list(
+            $post,
+            $postID,
+        ) = $this->getPostObjectAndID($postObjectOrID);
         return apply_filters('the_content', $post->post_content);
     }
     // public function getSinglePostTitle($post)
