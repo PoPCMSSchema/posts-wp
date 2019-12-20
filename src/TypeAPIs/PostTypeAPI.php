@@ -299,4 +299,12 @@ class PostTypeAPI implements PostTypeAPIInterface
     {
         return apply_filters('excerpt_length', 55);
     }
+    public function getPublishedDate($postObjectOrID): ?string
+    {
+        list(
+            $post,
+            $postID,
+        ) = $this->getPostObjectAndID($postObjectOrID);
+        return $post->post_date;
+    }
 }
