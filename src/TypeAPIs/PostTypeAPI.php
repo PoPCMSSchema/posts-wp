@@ -217,9 +217,16 @@ class PostTypeAPI implements PostTypeAPIInterface
     {
         return \get_the_excerpt($post_id);
     }
-    public function getTitle($post_id): ?string
+    public function getTitle($postObjectOrID): ?string
     {
-        return \get_the_title($post_id);
+        if (is_object($postObjectOrID)) {
+            $post = $postObjectOrID;
+            $post_id = $post->ID;
+        }  else {
+            $post_id = $postObjectOrID;
+            $post = get_post($post_id);
+        }
+        return apply_filters('the_title', $post->post_title, $post_id);
     }
     // public function getSinglePostTitle($post)
     // {
@@ -238,11 +245,6 @@ class PostTypeAPI implements PostTypeAPIInterface
         include_once ABSPATH.'wp-admin/includes/post.php';
         list($permalink, $post_name) = \get_sample_permalink($postObjectOrID, null, null);
         return $post_name;
-    }
-    public function getPostTitle($post_id): ?string
-    {
-        $post = $this->getPost($post_id);
-        return apply_filters('the_title', $post->post_title, $post_id);
     }
 
     public function getPostContent($post_id): ?string
