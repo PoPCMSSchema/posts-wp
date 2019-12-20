@@ -56,9 +56,9 @@ class PostTypeAPI implements PostTypeAPIInterface
         return $this->getPost($id) != null;
     }
 
-    public function getPostStatus($post_id): ?string
+    public function getStatus($postObjectOrID): ?string
     {
-        $status = get_post_status($post_id);
+        $status = get_post_status($postObjectOrID);
         return PostTypeAPIUtils::convertPostStatusFromCMSToPoP($status);
     }
     public function getPosts($query, array $options = [])
@@ -203,7 +203,7 @@ class PostTypeAPI implements PostTypeAPIInterface
     }
     public function getPermalink($post_id): ?string
     {
-        if ($this->getPostStatus($post_id) == POP_POSTSTATUS_PUBLISHED) {
+        if ($this->getStatus($post_id) == POP_POSTSTATUS_PUBLISHED) {
             return \get_permalink($post_id);
         }
 
@@ -228,7 +228,7 @@ class PostTypeAPI implements PostTypeAPIInterface
     // }
     public function getPostSlug($post_id)
     {
-        if ($this->getPostStatus($post_id) == POP_POSTSTATUS_PUBLISHED) {
+        if ($this->getStatus($post_id) == POP_POSTSTATUS_PUBLISHED) {
             $post = $this->getPost($post_id);
             return $post->post_name;
         }
