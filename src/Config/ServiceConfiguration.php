@@ -13,8 +13,8 @@ class ServiceConfiguration
         ContainerBuilderUtils::injectValuesIntoService(
             'instance_manager',
             'overrideClass',
-            \PoP\Content\TypeDataLoaders\ContentEntityUnionTypeDataLoader::class,
-            \PoP\PostsWP\TypeDataLoaders\Overrides\ContentEntityUnionTypeDataLoader::class
+            \PoP\Content\TypeResolvers\ContentEntityUnionTypeResolver::class,
+            \PoP\PostsWP\TypeResolvers\Overrides\ContentEntityUnionTypeResolver::class
         );
     }
 }

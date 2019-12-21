@@ -19,7 +19,7 @@ class ContentEntityUnionTypeResolver extends \PoP\Content\TypeResolvers\ContentE
      * @param array $ids
      * @return array
      */
-    protected function getResultItemIDTargetTypeResolvers(array $ids): array
+    public function getResultItemIDTargetTypeResolvers(array $ids): array
     {
         $resultItemIDTargetTypeResolvers = [];
         $instanceManager = InstanceManagerFacade::getInstance();
