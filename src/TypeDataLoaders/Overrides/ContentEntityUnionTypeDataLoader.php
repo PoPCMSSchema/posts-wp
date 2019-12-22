@@ -4,7 +4,7 @@ namespace PoP\PostsWP\TypeDataLoaders\Overrides;
 use PoP\Posts\TypeDataLoaders\PostTypeDataLoader;
 use PoP\Content\TypeResolvers\ContentEntityUnionTypeResolver;
 use PoP\ComponentModel\Facades\Instances\InstanceManagerFacade;
-use PoP\ComponentModel\TypeResolverPickers\CastableTypeResolverPickerInterface;
+use PoP\PostsWP\TypeResolverPickers\ContentEntityTypeResolverPickerInterface;
 use PoP\Posts\Facades\PostTypeAPIFacade;
 
 /**
@@ -48,9 +48,9 @@ class ContentEntityUnionTypeDataLoader extends PostTypeDataLoader
                 if (is_null($targetTypeResolverPicker)) {
                     return $post;
                 }
-                if ($targetTypeResolverPicker instanceof CastableTypeResolverPickerInterface) {
+                if ($targetTypeResolverPicker instanceof ContentEntityTypeResolverPickerInterface) {
                     // Cast object, eg: from post to event
-                    return $targetTypeResolverPicker->cast($post);
+                    return $targetTypeResolverPicker->maybeCast($post);
                 }
                 return $post;
             },
