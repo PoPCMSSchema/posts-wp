@@ -230,7 +230,11 @@ class PostTypeAPI implements PostTypeAPIInterface
     }
     public function getExcerpt($postObjectOrID): ?string
     {
-        return \get_the_excerpt($postObjectOrID);
+        list(
+            $post,
+            $postID,
+        ) = $this->getPostObjectAndID($postObjectOrID);
+        return $post->post_excerpt;
     }
     protected function getPostObjectAndID($postObjectOrID): array
     {
