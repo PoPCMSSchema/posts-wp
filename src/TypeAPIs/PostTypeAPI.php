@@ -5,12 +5,13 @@ use WP_Post;
 use WP_Query;
 use function get_post;
 use function get_posts;
-use function get_post_status;
 use function apply_filters;
+use function get_post_status;
 use PoP\Hooks\Facades\HooksAPIFacade;
 use PoP\PostsWP\TypeAPIs\PostTypeAPIUtils;
 use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
 use PoP\ComponentModel\TypeDataResolvers\APITypeDataResolverTrait;
+use PoP\PostsWP\TypeResolverPickers\ContentEntityUnionTypeHelpers;
 
 /**
  * Methods to interact with the Type, to be implemented by the underlying CMS
@@ -125,9 +126,11 @@ class PostTypeAPI implements PostTypeAPIInterface
             }
         }
         if (isset($query['post-types'])) {
-
             $query['post_type'] = $query['post-types'];
             unset($query['post-types']);
+        } elseif ($unionTypeResolverClass = $query['types-from-union-resolver-class']) {
+            $query['post_type'] = ContentEntityUnionTypeHelpers::getTargetTypeResolverPostTypes($unionTypeResolverClass);
+            unset($query['types-from-union-resolver-class']);
         }
         if (isset($query['offset'])) {
             // Same param name, so do nothing

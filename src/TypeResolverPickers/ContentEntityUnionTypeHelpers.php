@@ -3,6 +3,7 @@ namespace PoP\PostsWP\TypeResolverPickers;
 
 use PoP\Content\TypeResolvers\ContentEntityUnionTypeResolver;
 use PoP\ComponentModel\Facades\Instances\InstanceManagerFacade;
+use PoP\ComponentModel\TypeResolvers\UnionTypeResolverInterface;
 use PoP\PostsWP\TypeResolverPickers\ContentEntityTypeResolverPickerInterface;
 
 /**
@@ -11,22 +12,17 @@ use PoP\PostsWP\TypeResolverPickers\ContentEntityTypeResolverPickerInterface;
  */
 class ContentEntityUnionTypeHelpers
 {
-    public static function getPostUnionTypeResolver(): ContentEntityUnionTypeResolver
-    {
-        $instanceManager = InstanceManagerFacade::getInstance();
-        return $instanceManager->getInstance(ContentEntityUnionTypeResolver::class);
-    }
-
     /**
      * Obtain the post types from all member typeResolvers
      *
      * @return void
      */
-    public static function getPostUnionTypeResolverTargetTypeResolverPostTypes()
+    public static function getTargetTypeResolverPostTypes(string $unionTypeResolverClass)
     {
         $postTypes = [];
-        $postUnionTypeResolver = self::getPostUnionTypeResolver();
-        $typeResolverPickers = $postUnionTypeResolver->getTypeResolverPickers();
+        $instanceManager = InstanceManagerFacade::getInstance();
+        $unionTypeResolver = $instanceManager->getInstance($unionTypeResolverClass);
+        $typeResolverPickers = $unionTypeResolver->getTypeResolverPickers();
         foreach ($typeResolverPickers as $typeResolverPicker) {
             // The picker should implement interface ContentEntityTypeResolverPickerInterface
             if ($typeResolverPicker instanceof ContentEntityTypeResolverPickerInterface) {

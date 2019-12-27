@@ -2,8 +2,10 @@
 namespace PoP\PostsWP\TypeDataLoaders\Overrides;
 
 use PoP\Posts\TypeDataLoaders\PostTypeDataLoader;
-use PoP\PostsWP\TypeResolverPickers\ContentEntityTypeResolverPickerInterface;
+use PoP\Content\TypeResolvers\ContentEntityUnionTypeResolver;
+use PoP\ComponentModel\Facades\Instances\InstanceManagerFacade;
 use PoP\PostsWP\TypeResolverPickers\ContentEntityUnionTypeHelpers;
+use PoP\PostsWP\TypeResolverPickers\ContentEntityTypeResolverPickerInterface;
 
 /**
  * In the context of WordPress, "Content Entities" are all posts (eg: posts, pages, attachments, events, etc)
@@ -16,7 +18,7 @@ class ContentEntityUnionTypeDataLoader extends PostTypeDataLoader
         $query = parent::getObjectQuery($ids);
 
         // From all post types from the member typeResolvers
-        $query['post-types'] = ContentEntityUnionTypeHelpers::getPostUnionTypeResolverTargetTypeResolverPostTypes();
+        $query['post-types'] = ContentEntityUnionTypeHelpers::getTargetTypeResolverPostTypes(ContentEntityUnionTypeResolver::class);
 
         return $query;
     }
@@ -26,7 +28,7 @@ class ContentEntityUnionTypeDataLoader extends PostTypeDataLoader
         $query = parent::getDataFromIdsQuery($ids);
 
         // From all post types from the member typeResolvers
-        $query['post-types'] = ContentEntityUnionTypeHelpers::getPostUnionTypeResolverTargetTypeResolverPostTypes();
+        $query['post-types'] = ContentEntityUnionTypeHelpers::getTargetTypeResolverPostTypes(ContentEntityUnionTypeResolver::class);
 
         return $query;
     }
@@ -37,7 +39,8 @@ class ContentEntityUnionTypeDataLoader extends PostTypeDataLoader
 
         // After executing `get_posts` it returns a list of posts, without converting the object to its own post type
         // Cast the posts to their own classes (eg: event)
-        $postUnionTypeResolver = ContentEntityUnionTypeHelpers::getPostUnionTypeResolver();
+        $instanceManager = InstanceManagerFacade::getInstance();
+        $postUnionTypeResolver =  $instanceManager->getInstance(ContentEntityUnionTypeResolver::class);
         $posts = array_map(
             function($post) use($postUnionTypeResolver) {
                 $targetTypeResolverPicker = $postUnionTypeResolver->getTargetTypeResolverPicker($post);
