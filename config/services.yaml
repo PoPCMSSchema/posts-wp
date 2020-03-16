@@ -2,3 +2,7 @@ services:
     post_type_api:
         class: \PoP\PostsWP\TypeAPIs\PostTypeAPI
         public: true
+
+    PoP\PostsWP\TypeResolvers\:
+        resource: '../src/TypeResolvers/*'
+        public: true
