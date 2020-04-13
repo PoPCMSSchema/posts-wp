@@ -136,7 +136,6 @@ class PostTypeAPI implements PostTypeAPIInterface
             // Same param name, so do nothing
         }
         if (isset($query['limit'])) {
-
             $query['posts_per_page'] = $query['limit'];
             unset($query['limit']);
         }
@@ -149,19 +148,16 @@ class PostTypeAPI implements PostTypeAPIInterface
             // $query['orderby'] => array('date' => 'DESC', 'title' => 'ASC');
         }
         if (isset($query['post-not-in'])) {
-
             $query['post__not_in'] = $query['post-not-in'];
             unset($query['post-not-in']);
         }
         if (isset($query['search'])) {
-
             $query['is_search'] = true;
             $query['s'] = $query['search'];
             unset($query['search']);
         }
         // Filtering by date: Instead of operating on the query, it does it through filter 'posts_where'
         if (isset($query['date-from'])) {
-
             $query['date_query'][] = [
                 'after' => $query['date-from'],
                 'inclusive' => false,
@@ -169,7 +165,6 @@ class PostTypeAPI implements PostTypeAPIInterface
             unset($query['date-from']);
         }
         if (isset($query['date-from-inclusive'])) {
-
             $query['date_query'][] = [
                 'after' => $query['date-from-inclusive'],
                 'inclusive' => true,
@@ -177,7 +172,6 @@ class PostTypeAPI implements PostTypeAPIInterface
             unset($query['date-from-inclusive']);
         }
         if (isset($query['date-to'])) {
-
             $query['date_query'][] = [
                 'before' => $query['date-to'],
                 'inclusive' => false,
@@ -185,7 +179,6 @@ class PostTypeAPI implements PostTypeAPIInterface
             unset($query['date-to']);
         }
         if (isset($query['date-to-inclusive'])) {
-
             $query['date_query'][] = [
                 'before' => $query['date-to-inclusive'],
                 'inclusive' => true,
@@ -204,7 +197,6 @@ class PostTypeAPI implements PostTypeAPIInterface
     {
         // Convert the parameters
         if (isset($query['exclude-from-search'])) {
-
             $query['exclude_from_search'] = $query['exclude-from-search'];
             unset($query['exclude-from-search']);
         }
@@ -227,7 +219,7 @@ class PostTypeAPI implements PostTypeAPIInterface
 
         // Function get_sample_permalink comes from the file below, so it must be included
         // Code below copied from `function get_sample_permalink_html`
-        include_once ABSPATH.'wp-admin/includes/post.php';
+        include_once ABSPATH . 'wp-admin/includes/post.php';
         list($permalink, $post_name) = \get_sample_permalink($postID, null, null);
         return str_replace(['%pagename%', '%postname%'], $post_name, $permalink);
     }
@@ -240,7 +232,7 @@ class PostTypeAPI implements PostTypeAPIInterface
         if (is_object($postObjectOrID)) {
             $post = $postObjectOrID;
             $postID = $post->ID;
-        }  else {
+        } else {
             $postID = $postObjectOrID;
             $post = get_post($postID);
         }
@@ -281,7 +273,7 @@ class PostTypeAPI implements PostTypeAPIInterface
 
         // Function get_sample_permalink comes from the file below, so it must be included
         // Code below copied from `function get_sample_permalink_html`
-        include_once ABSPATH.'wp-admin/includes/post.php';
+        include_once ABSPATH . 'wp-admin/includes/post.php';
         list($permalink, $post_name) = \get_sample_permalink($postObjectOrID, null, null);
         return $post_name;
     }
@@ -304,9 +296,10 @@ class PostTypeAPI implements PostTypeAPIInterface
     }
 
 
-    public function getExcerptMore() {
+    public function getExcerptMore()
+    {
 
-        return apply_filters('excerpt_more', ' '.'[&hellip;]');
+        return apply_filters('excerpt_more', ' ' . '[&hellip;]');
     }
 
     public function getExcerptLength()
@@ -337,5 +330,4 @@ class PostTypeAPI implements PostTypeAPIInterface
         ) = $this->getPostObjectAndID($postObjectOrID);
         return $post->post_modified;
     }
-
 }

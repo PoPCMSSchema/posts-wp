@@ -35,4 +35,3 @@ class ContentEntityUnionTypeResolver extends \PoP\Content\TypeResolvers\ContentE
         return $resultItemIDTargetTypeResolvers;
     }
 }
-

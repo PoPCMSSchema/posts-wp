@@ -42,7 +42,7 @@ class ContentEntityUnionTypeDataLoader extends PostTypeDataLoader
         $instanceManager = InstanceManagerFacade::getInstance();
         $postUnionTypeResolver =  $instanceManager->getInstance(ContentEntityUnionTypeResolver::class);
         $posts = array_map(
-            function($post) use($postUnionTypeResolver) {
+            function ($post) use ($postUnionTypeResolver) {
                 $targetTypeResolverPicker = $postUnionTypeResolver->getTargetTypeResolverPicker($post);
                 if (is_null($targetTypeResolverPicker)) {
                     return $post;
