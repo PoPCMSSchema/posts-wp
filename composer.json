@@ -22,7 +22,7 @@
         "getpop/posts": "~0.1",
         "getpop/content-wp": "~0.1",
         "getpop/queriedobject-wp": "~0.1",
-        "getpop/migrate-posts-wp": "dev-master"
+        "getpop/migrate-posts-wp": "~0.1"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12",
