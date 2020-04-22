@@ -211,6 +211,11 @@ class PostTypeAPI implements PostTypeAPIInterface
             $query['exclude_from_search'] = $query['exclude-from-search'];
             unset($query['exclude-from-search']);
         }
+        // Same key, so no need to convert
+        // if (isset($query['public'])) {
+        //     $query['public'] = $query['public'];
+        //     unset($query['public']);
+        // }
         return \get_post_types($query);
     }
 
