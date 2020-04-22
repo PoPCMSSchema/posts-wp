@@ -26,7 +26,7 @@ class PostTypeAPI implements PostTypeAPIInterface
     /**
      * Return the post's ID
      *
-     * @param [type] $post
+     * @param object $post
      * @return void
      */
     public function getID($post)
@@ -37,7 +37,7 @@ class PostTypeAPI implements PostTypeAPIInterface
     /**
      * Indicates if the passed object is of type Post
      *
-     * @param [type] $object
+     * @param object $object
      * @return boolean
      */
     public function isInstanceOfPostType($object): bool
@@ -48,7 +48,7 @@ class PostTypeAPI implements PostTypeAPIInterface
     /**
      * Get the post with provided ID or, if it doesn't exist, null
      *
-     * @param [type] $id
+     * @param int $id
      * @return void
      */
     public function getPost($id)
@@ -63,7 +63,7 @@ class PostTypeAPI implements PostTypeAPIInterface
     /**
      * Indicate if an post with provided ID exists
      *
-     * @param [type] $id
+     * @param int $id
      * @return void
      */
     public function postExists($id): bool
@@ -112,7 +112,10 @@ class PostTypeAPI implements PostTypeAPIInterface
         if (isset($query['post-status'])) {
             if (is_array($query['post-status'])) {
                 // doing get_posts can accept an array of values
-                $query['post_status'] = array_map([PostTypeAPIUtils::class, 'convertPostStatusFromPoPToCMS'], $query['post-status']);
+                $query['post_status'] = array_map(
+                    [PostTypeAPIUtils::class, 'convertPostStatusFromPoPToCMS'],
+                    $query['post-status']
+                );
             } else {
                 // doing wp_insert/update_post accepts a single value
                 $query['post_status'] = PostTypeAPIUtils::convertPostStatusFromPoPToCMS($query['post-status']);
@@ -132,7 +135,9 @@ class PostTypeAPI implements PostTypeAPIInterface
             $query['post_type'] = $query['post-types'];
             unset($query['post-types']);
         } elseif ($unionTypeResolverClass = $query['types-from-union-resolver-class']) {
-            $query['post_type'] = ContentEntityUnionTypeHelpers::getTargetTypeResolverPostTypes($unionTypeResolverClass);
+            $query['post_type'] = ContentEntityUnionTypeHelpers::getTargetTypeResolverPostTypes(
+                $unionTypeResolverClass
+            );
             unset($query['types-from-union-resolver-class']);
         }
         if (isset($query['offset'])) {
