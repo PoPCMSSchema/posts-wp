@@ -139,6 +139,9 @@ class PostTypeAPI implements PostTypeAPIInterface
                 $unionTypeResolverClass
             );
             unset($query['types-from-union-resolver-class']);
+        } else {
+            // Default value: only get POST, no CPTs
+            $query['post_type'] = ['post'];
         }
         if (isset($query['offset'])) {
             // Same param name, so do nothing
