@@ -22,6 +22,7 @@ use PoP\PostsWP\TypeResolverPickers\ContentEntityUnionTypeHelpers;
 class PostTypeAPI implements PostTypeAPIInterface
 {
     use APITypeDataResolverTrait;
+    // public const NON_EXISTING_ID = "non-existing";
 
     /**
      * Return the post's ID
@@ -133,16 +134,30 @@ class PostTypeAPI implements PostTypeAPIInterface
         }
         if (isset($query['post-types'])) {
             $query['post_type'] = $query['post-types'];
+            // // Make sure they are public, to avoid an external query requesting forbidden data
+            // $postTypes = array_intersect(
+            //     $query['post-types'],
+            //     $this->getPostTypes(['public' => true])
+            // );
+            // // If there are no valid postTypes, then return no results
+            // // By not adding the post type, WordPress will fetch a "post"
+            // // Then, include a non-existing ID
+            // if ($postTypes) {
+            //     $query['post_type'] = $postTypes;
+            // } else {
+            //     $query['include'] = self::NON_EXISTING_ID; // Non-existing ID
+            // }
             unset($query['post-types']);
         } elseif ($unionTypeResolverClass = $query['types-from-union-resolver-class']) {
             $query['post_type'] = ContentEntityUnionTypeHelpers::getTargetTypeResolverPostTypes(
                 $unionTypeResolverClass
             );
             unset($query['types-from-union-resolver-class']);
-        } else {
-            // Default value: only get POST, no CPTs
-            $query['post_type'] = ['post'];
         }
+        // else {
+        //     // Default value: only get POST, no CPTs
+        //     $query['post_type'] = ['post'];
+        // }
         if (isset($query['offset'])) {
             // Same param name, so do nothing
         }
@@ -210,6 +225,10 @@ class PostTypeAPI implements PostTypeAPIInterface
         if (isset($query['exclude-from-search'])) {
             $query['exclude_from_search'] = $query['exclude-from-search'];
             unset($query['exclude-from-search']);
+        }
+        if (isset($query['publicly-queryable'])) {
+            $query['publicly_queryable'] = $query['publicly-queryable'];
+            unset($query['publicly-queryable']);
         }
         // Same key, so no need to convert
         // if (isset($query['public'])) {
