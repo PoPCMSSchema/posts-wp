@@ -11,11 +11,12 @@ use function get_posts;
 use function apply_filters;
 use function get_post_status;
 use PoP\Hooks\Facades\HooksAPIFacade;
+use PoP\Posts\ComponentConfiguration;
 use PoP\PostsWP\TypeAPIs\PostTypeAPIUtils;
 use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
 use PoP\ComponentModel\TypeDataResolvers\APITypeDataResolverTrait;
-use PoP\Posts\ComponentConfiguration;
 use PoP\PostsWP\TypeResolverPickers\ContentEntityUnionTypeHelpers;
+use PoP\QueriedObject\TypeAPIs\TypeAPIUtils;
 
 /**
  * Methods to interact with the Type, to be implemented by the underlying CMS
@@ -163,12 +164,12 @@ class PostTypeAPI implements PostTypeAPIInterface
             // Same param name, so do nothing
         }
         if (isset($query['limit'])) {
-            // Check if the limit is higher than the max limit
-            $limit = $query['limit'];
-            $maxLimit = ComponentConfiguration::getPostListMaxLimit();
-            if (!is_null($maxLimit) && $maxLimit != -1 && ($limit == -1 || $limit > $maxLimit)) {
-                $limit = $maxLimit;
-            }
+            // Maybe restrict the limit, if higher than the max limit
+            $limit = TypeAPIUtils::getLimitOrMaxLimit(
+                $query['limit'],
+                ComponentConfiguration::getPostListMaxLimit()
+            );
+
             // Assign the limit as the required attribute
             $query['posts_per_page'] = $limit;
             unset($query['limit']);
