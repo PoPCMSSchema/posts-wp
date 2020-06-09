@@ -14,6 +14,7 @@ use PoP\Hooks\Facades\HooksAPIFacade;
 use PoP\PostsWP\TypeAPIs\PostTypeAPIUtils;
 use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
 use PoP\ComponentModel\TypeDataResolvers\APITypeDataResolverTrait;
+use PoP\Posts\ComponentConfiguration;
 use PoP\PostsWP\TypeResolverPickers\ContentEntityUnionTypeHelpers;
 
 /**
@@ -52,7 +53,7 @@ class PostTypeAPI implements PostTypeAPIInterface
      * @param int $id
      * @return void
      */
-    public function getPost($id)
+    public function getPost($id): ?object
     {
         $post = get_post($id);
         if (!$post || $post->post_type != 'post') {
@@ -162,7 +163,14 @@ class PostTypeAPI implements PostTypeAPIInterface
             // Same param name, so do nothing
         }
         if (isset($query['limit'])) {
-            $query['posts_per_page'] = $query['limit'];
+            // Check if the limit is higher than the max limit
+            $limit = $query['limit'];
+            $maxLimit = ComponentConfiguration::getPostListMaxLimit();
+            if (!is_null($maxLimit) && $maxLimit != -1 && ($limit == -1 || $limit > $maxLimit)) {
+                $limit = $maxLimit;
+            }
+            // Assign the limit as the required attribute
+            $query['posts_per_page'] = $limit;
             unset($query['limit']);
         }
         if (isset($query['order'])) {
