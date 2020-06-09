@@ -83,22 +83,21 @@ class PostTypeAPI implements PostTypeAPIInterface
     {
         // Convert the parameters
         $query = $this->convertPostsQuery($query, $options);
-        return get_posts($query);
+        return \get_posts($query);
     }
-    public function getPostCount($query): int
+    public function getPostCount(array $query = [], array $options = []): int
     {
-        // All results
-        if (!isset($query['limit'])) {
-            $query['limit'] = -1;
-        }
-
         // Convert parameters
-        $query = $this->convertPostsQuery($query, ['return-type' => POP_RETURNTYPE_IDS]);
+        $options['return-type'] = POP_RETURNTYPE_IDS;
+        $query = $this->convertPostsQuery($query, $options);
 
-        // Taken from https://stackoverflow.com/questions/2504311/wordpress-get-post-count
-        $wp_query = new WP_Query();
-        $wp_query->query($query);
-        return (int) $wp_query->found_posts;
+        // All results, no offset
+        $query['posts_per_page'] = -1;
+        unset($query['offset']);
+
+        // Execute query and count results
+        $posts = \get_posts($query);
+        return count($posts);
     }
     protected function convertPostsQuery($query, array $options = [])
     {
