@@ -85,7 +85,7 @@ class PostTypeAPI implements PostTypeAPIInterface
         $query = $this->convertPostsQuery($query, $options);
         return get_posts($query);
     }
-    public function getPostCount($query)
+    public function getPostCount($query): int
     {
         // All results
         if (!isset($query['limit'])) {
@@ -98,7 +98,7 @@ class PostTypeAPI implements PostTypeAPIInterface
         // Taken from https://stackoverflow.com/questions/2504311/wordpress-get-post-count
         $wp_query = new WP_Query();
         $wp_query->query($query);
-        return $wp_query->found_posts;
+        return (int) $wp_query->found_posts;
     }
     protected function convertPostsQuery($query, array $options = [])
     {
