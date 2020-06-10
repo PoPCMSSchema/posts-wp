@@ -10,6 +10,7 @@ use WP_Post;
 use function get_post;
 use function apply_filters;
 use PoP\Hooks\Facades\HooksAPIFacade;
+use PoP\Content\Types\Status;
 
 /**
  * Methods to interact with the Type, to be implemented by the underlying CMS
@@ -60,7 +61,7 @@ class PostTypeAPI extends \PoP\ContentWP\TypeAPIs\PostTypeAPI implements PostTyp
 
     public function getSlug($postObjectOrID): ?string
     {
-        if ($this->getStatus($postObjectOrID) == POP_POSTSTATUS_PUBLISHED) {
+        if ($this->getStatus($postObjectOrID) == Status::PUBLISHED) {
             $post = $this->getPost($postObjectOrID);
             return $post->post_name;
         }
