@@ -7,8 +7,8 @@ namespace PoP\PostsWP\TypeDataLoaders\Overrides;
 use PoP\Posts\TypeDataLoaders\PostTypeDataLoader;
 use PoP\Content\TypeResolvers\ContentEntityUnionTypeResolver;
 use PoP\ComponentModel\Facades\Instances\InstanceManagerFacade;
-use PoP\PostsWP\TypeResolverPickers\ContentEntityUnionTypeHelpers;
-use PoP\PostsWP\TypeResolverPickers\ContentEntityTypeResolverPickerInterface;
+use PoP\ContentWP\TypeResolverPickers\ContentEntityUnionTypeHelpers;
+use PoP\ContentWP\TypeResolverPickers\ContentEntityTypeResolverPickerInterface;
 
 /**
  * In the context of WordPress, "Content Entities" are all posts (eg: posts, pages, attachments, events, etc)
