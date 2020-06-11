@@ -16,22 +16,22 @@ class ServiceConfiguration
         ContainerBuilderUtils::injectValuesIntoService(
             'instance_manager',
             'overrideClass',
-            \PoP\Content\TypeDataLoaders\ContentEntityUnionTypeDataLoader::class,
-            \PoP\PostsWP\TypeDataLoaders\Overrides\ContentEntityUnionTypeDataLoader::class
+            \PoP\Content\TypeDataLoaders\CustomPostUnionTypeDataLoader::class,
+            \PoP\PostsWP\TypeDataLoaders\Overrides\CustomPostUnionTypeDataLoader::class
         );
 
         ContainerBuilderUtils::injectValuesIntoService(
             'instance_manager',
             'overrideClass',
-            \PoP\Content\TypeResolvers\ContentEntityUnionTypeResolver::class,
-            \PoP\PostsWP\TypeResolvers\Overrides\ContentEntityUnionTypeResolver::class
+            \PoP\Content\TypeResolvers\CustomPostUnionTypeResolver::class,
+            \PoP\PostsWP\TypeResolvers\Overrides\CustomPostUnionTypeResolver::class
         );
 
         ContainerBuilderUtils::injectValuesIntoService(
             'instance_manager',
             'overrideClass',
-            \PoP\Posts\TypeResolverPickers\Optional\PostContentEntityTypeResolverPicker::class,
-            \PoP\PostsWP\TypeResolverPickers\Overrides\PostContentEntityTypeResolverPicker::class
+            \PoP\Posts\TypeResolverPickers\Optional\PostCustomPostTypeResolverPicker::class,
+            \PoP\PostsWP\TypeResolverPickers\Overrides\PostCustomPostTypeResolverPicker::class
         );
     }
 }
