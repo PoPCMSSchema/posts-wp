@@ -7,7 +7,7 @@ namespace PoP\PostsWP\TypeResolvers\Overrides;
 use PoP\ComponentModel\Facades\Instances\InstanceManagerFacade;
 use PoP\PostsWP\TypeDataLoaders\Overrides\CustomPostUnionTypeDataLoader;
 
-class CustomPostUnionTypeResolver extends \PoP\Content\TypeResolvers\CustomPostUnionTypeResolver
+class CustomPostUnionTypeResolver extends \PoP\CustomPosts\TypeResolvers\CustomPostUnionTypeResolver
 {
     public function getTypeDataLoaderClass(): string
     {

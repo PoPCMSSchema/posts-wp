@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace PoP\PostsWP\TypeDataLoaders\Overrides;
 
 use PoP\Posts\TypeDataLoaders\PostTypeDataLoader;
-use PoP\Content\TypeResolvers\CustomPostUnionTypeResolver;
+use PoP\CustomPosts\TypeResolvers\CustomPostUnionTypeResolver;
 use PoP\ComponentModel\Facades\Instances\InstanceManagerFacade;
-use PoP\ContentWP\TypeResolverPickers\CustomPostUnionTypeHelpers;
-use PoP\ContentWP\TypeResolverPickers\CustomPostTypeResolverPickerInterface;
+use PoP\CustomPostsWP\TypeResolverPickers\CustomPostUnionTypeHelpers;
+use PoP\CustomPostsWP\TypeResolverPickers\CustomPostTypeResolverPickerInterface;
 
 /**
  * In the context of WordPress, "Custom Posts" are all posts (eg: posts, pages, attachments, events, etc)

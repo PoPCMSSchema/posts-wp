@@ -10,12 +10,12 @@ use WP_Post;
 use function get_post;
 use function apply_filters;
 use PoP\Hooks\Facades\HooksAPIFacade;
-use PoP\Content\Types\Status;
+use PoP\CustomPosts\Types\Status;
 
 /**
  * Methods to interact with the Type, to be implemented by the underlying CMS
  */
-class PostTypeAPI extends \PoP\ContentWP\TypeAPIs\PostTypeAPI implements PostTypeAPIInterface
+class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\PostTypeAPI implements PostTypeAPIInterface
 {
     /**
      * Indicates if the passed object is of type Post

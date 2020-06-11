@@ -16,14 +16,14 @@ class ServiceConfiguration
         ContainerBuilderUtils::injectValuesIntoService(
             'instance_manager',
             'overrideClass',
-            \PoP\Content\TypeDataLoaders\CustomPostUnionTypeDataLoader::class,
+            \PoP\CustomPosts\TypeDataLoaders\CustomPostUnionTypeDataLoader::class,
             \PoP\PostsWP\TypeDataLoaders\Overrides\CustomPostUnionTypeDataLoader::class
         );
 
         ContainerBuilderUtils::injectValuesIntoService(
             'instance_manager',
             'overrideClass',
-            \PoP\Content\TypeResolvers\CustomPostUnionTypeResolver::class,
+            \PoP\CustomPosts\TypeResolvers\CustomPostUnionTypeResolver::class,
             \PoP\PostsWP\TypeResolvers\Overrides\CustomPostUnionTypeResolver::class
         );
 
