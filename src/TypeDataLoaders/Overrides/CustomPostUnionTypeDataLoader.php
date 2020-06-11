@@ -11,7 +11,7 @@ use PoP\ContentWP\TypeResolverPickers\CustomPostUnionTypeHelpers;
 use PoP\ContentWP\TypeResolverPickers\CustomPostTypeResolverPickerInterface;
 
 /**
- * In the context of WordPress, "Content Entities" are all posts (eg: posts, pages, attachments, events, etc)
+ * In the context of WordPress, "Custom Posts" are all posts (eg: posts, pages, attachments, events, etc)
  * Hence, this class can simply inherit from the Post dataloader, and add the post-types for all required types
  */
 class CustomPostUnionTypeDataLoader extends PostTypeDataLoader
