@@ -108,12 +108,12 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\PostTypeAPI implements Pos
         ) = $this->getPostObjectAndID($postObjectOrID);
         return $post->post_date;
     }
-    public function getAuthorID($postObjectOrID)
-    {
-        list(
-            $post,
-            $postID,
-        ) = $this->getPostObjectAndID($postObjectOrID);
-        return $post->post_author;
-    }
+    // public function getAuthorID($postObjectOrID)
+    // {
+    //     list(
+    //         $post,
+    //         $postID,
+    //     ) = $this->getPostObjectAndID($postObjectOrID);
+    //     return $post->post_author;
+    // }
 }
