@@ -34,7 +34,7 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\PostTypeAPI implements Pos
      * @param int $id
      * @return void
      */
-    public function getPost($id): ?object
+    protected function getPost($id): ?object
     {
         $post = get_post($id);
         if (!$post || $post->post_type != 'post') {
@@ -57,8 +57,8 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\PostTypeAPI implements Pos
     public function getSlug($postObjectOrID): ?string
     {
         if ($this->getStatus($postObjectOrID) == Status::PUBLISHED) {
-            $post = $this->getPost($postObjectOrID);
-            return $post->post_name;
+            $customPost = $this->getCustomPost($postObjectOrID);
+            return $customPost->post_name;
         }
 
         // Function get_sample_permalink comes from the file below, so it must be included
@@ -70,7 +70,7 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\PostTypeAPI implements Pos
 
     public function getBasicPostContent($post_id)
     {
-        $post = $this->getPost($post_id);
+        $customPost = $this->getCustomPost($post_id);
 
         // Basic content: remove embeds, shortcodes, and tags
         // Remove the embed functionality, and then add again
@@ -78,7 +78,7 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\PostTypeAPI implements Pos
         HooksAPIFacade::getInstance()->removeFilter('the_content', array( $wp_embed, 'autoembed' ), 8);
 
         // Do not allow HTML tags or shortcodes
-        $ret = \strip_shortcodes($post->post_content);
+        $ret = \strip_shortcodes($customPost->post_content);
         $ret = HooksAPIFacade::getInstance()->applyFilters('the_content', $ret);
         HooksAPIFacade::getInstance()->addFilter('the_content', array( $wp_embed, 'autoembed' ), 8);
 
