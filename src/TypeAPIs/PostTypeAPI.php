@@ -54,11 +54,6 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\PostTypeAPI implements Pos
         return $this->getPost($id) != null;
     }
 
-    public function getPostType($post)
-    {
-        return \get_post_type($post);
-    }
-
     public function getSlug($postObjectOrID): ?string
     {
         if ($this->getStatus($postObjectOrID) == Status::PUBLISHED) {

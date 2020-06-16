@@ -19,7 +19,7 @@ class PostCustomPostTypeResolverPicker extends \PoP\Posts\TypeResolverPickers\Op
         ];
     }
 
-    public function getPostType(): string
+    public function getCustomPostType(): string
     {
         return 'post';
     }

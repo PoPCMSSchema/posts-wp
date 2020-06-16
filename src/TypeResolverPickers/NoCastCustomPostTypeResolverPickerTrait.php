@@ -12,8 +12,8 @@ trait NoCastCustomPostTypeResolverPickerTrait
      * @param [type] $post
      * @return void
      */
-    public function maybeCast($post)
+    public function maybeCast($customPost)
     {
-        return $post;
+        return $customPost;
     }
 }
