@@ -106,12 +106,12 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\PostTypeAPI implements Pos
 
     public function getPosts($query, array $options = []): array
     {
-        // $query['post-types'] = ['post'];
+        $query['post-types'] = ['post'];
         return $this->getCustomPosts($query, $options);
     }
     public function getPostCount(array $query = [], array $options = []): int
     {
-        // $query['post-types'] = ['post'];
+        $query['post-types'] = ['post'];
         return $this->getCustomPostCount($query, $options);
     }
 }
