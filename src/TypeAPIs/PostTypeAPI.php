@@ -53,16 +53,6 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI implemen
         return $this->getPost($id) != null;
     }
 
-    public function getExcerptMore()
-    {
-
-        return apply_filters('excerpt_more', ' ' . '[&hellip;]');
-    }
-
-    public function getExcerptLength()
-    {
-        return apply_filters('excerpt_length', 55);
-    }
     public function getPublishedDate($postObjectOrID): ?string
     {
         list(
