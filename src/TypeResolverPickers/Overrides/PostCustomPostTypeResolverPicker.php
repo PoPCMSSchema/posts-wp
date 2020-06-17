@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PoP\PostsWP\TypeResolverPickers\Overrides;
 
+use PoP\Posts\Facades\PostTypeAPIFacade;
 use PoP\CustomPostsWP\TypeResolvers\Overrides\CustomPostUnionTypeResolver;
 use PoP\CustomPostsWP\TypeResolverPickers\CustomPostTypeResolverPickerInterface;
 use PoP\CustomPostsWP\TypeResolverPickers\NoCastCustomPostTypeResolverPickerTrait;
@@ -21,6 +22,7 @@ class PostCustomPostTypeResolverPicker extends \PoP\Posts\TypeResolverPickers\Op
 
     public function getCustomPostType(): string
     {
-        return 'post';
+        $postTypeAPI = PostTypeAPIFacade::getInstance();
+        return $postTypeAPI->getPostCustomPostType();
     }
 }

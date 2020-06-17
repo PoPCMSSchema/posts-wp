@@ -72,4 +72,8 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI implemen
         $query['post-types'] = ['post'];
         return $this->getCustomPostCount($query, $options);
     }
+    public function getPostCustomPostType(): string
+    {
+        return 'post';
+    }
 }
