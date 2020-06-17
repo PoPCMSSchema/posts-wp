@@ -15,7 +15,7 @@ use PoP\CustomPosts\Types\Status;
 /**
  * Methods to interact with the Type, to be implemented by the underlying CMS
  */
-class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\PostTypeAPI implements PostTypeAPIInterface
+class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI implements PostTypeAPIInterface
 {
     /**
      * Indicates if the passed object is of type Post
