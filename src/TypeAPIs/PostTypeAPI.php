@@ -9,7 +9,6 @@ use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
 use WP_Post;
 use function get_post;
 use function apply_filters;
-use PoP\Hooks\Facades\HooksAPIFacade;
 use PoP\CustomPosts\Types\Status;
 
 /**
@@ -52,20 +51,6 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI implemen
     public function postExists($id): bool
     {
         return $this->getPost($id) != null;
-    }
-
-    public function getSlug($postObjectOrID): ?string
-    {
-        if ($this->getStatus($postObjectOrID) == Status::PUBLISHED) {
-            $customPost = $this->getCustomPost($postObjectOrID);
-            return $customPost->post_name;
-        }
-
-        // Function get_sample_permalink comes from the file below, so it must be included
-        // Code below copied from `function get_sample_permalink_html`
-        include_once ABSPATH . 'wp-admin/includes/post.php';
-        list($permalink, $post_name) = \get_sample_permalink($postObjectOrID, null, null);
-        return $post_name;
     }
 
     public function getExcerptMore()
