@@ -33,7 +33,7 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI implemen
      * @param int $id
      * @return void
      */
-    protected function getPost($id): ?object
+    public function getPost($id): ?object
     {
         $post = get_post($id);
         if (!$post || $post->post_type != 'post') {
@@ -62,7 +62,7 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI implemen
         return $post->post_date;
     }
 
-    public function getPosts($query, array $options = []): array
+    public function getPosts(array $query, array $options = []): array
     {
         $query['post-types'] = ['post'];
         return $this->getCustomPosts($query, $options);
