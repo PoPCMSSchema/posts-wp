@@ -21,7 +21,6 @@ class Component extends AbstractComponent
         return [
             \PoP\Posts\Component::class,
             \PoP\CustomPostsWP\Component::class,
-            \PoP\QueriedObjectWP\Component::class,
         ];
     }
 

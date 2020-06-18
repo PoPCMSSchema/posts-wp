@@ -21,7 +21,6 @@
         "php" : "~7.1",
         "getpop/posts": "dev-master",
         "getpop/customposts-wp": "dev-master",
-        "getpop/queriedobject-wp": "dev-master",
         "getpop/migrate-posts-wp": "dev-master"
     },
     "require-dev": {
