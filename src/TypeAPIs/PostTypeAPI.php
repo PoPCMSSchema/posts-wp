@@ -54,12 +54,12 @@ class PostTypeAPI extends CustomPostTypeAPI implements PostTypeAPIInterface
 
     public function getPosts(array $query, array $options = []): array
     {
-        $query['post-types'] = ['post'];
+        $query['custom-post-types'] = ['post'];
         return $this->getCustomPosts($query, $options);
     }
     public function getPostCount(array $query = [], array $options = []): int
     {
-        $query['post-types'] = ['post'];
+        $query['custom-post-types'] = ['post'];
         return $this->getCustomPostCount($query, $options);
     }
     public function getPostCustomPostType(): string
