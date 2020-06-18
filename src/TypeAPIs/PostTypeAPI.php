@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace PoP\PostsWP\TypeAPIs;
 
 use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
+use PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI;
 
 use WP_Post;
 use function get_post;
-use function apply_filters;
-use PoP\CustomPosts\Types\Status;
 
 /**
  * Methods to interact with the Type, to be implemented by the underlying CMS
  */
-class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI implements PostTypeAPIInterface
+class PostTypeAPI extends CustomPostTypeAPI implements PostTypeAPIInterface
 {
     /**
      * Indicates if the passed object is of type Post
@@ -51,15 +50,6 @@ class PostTypeAPI extends \PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI implemen
     public function postExists($id): bool
     {
         return $this->getPost($id) != null;
-    }
-
-    public function getPublishedDate($postObjectOrID): ?string
-    {
-        list(
-            $post,
-            $postID,
-        ) = $this->getCustomPostObjectAndID($postObjectOrID);
-        return $post->post_date;
     }
 
     public function getPosts(array $query, array $options = []): array
