@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace PoP\PostsWP\TypeAPIs;
 
-use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
-use PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI;
-
 use WP_Post;
 use function get_post;
+
+use PoP\Posts\ComponentConfiguration;
+use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
+use PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI;
 
 /**
  * Methods to interact with the Type, to be implemented by the underlying CMS
@@ -50,6 +51,17 @@ class PostTypeAPI extends CustomPostTypeAPI implements PostTypeAPIInterface
     public function postExists($id): bool
     {
         return $this->getPost($id) != null;
+    }
+
+    /**
+     * Limit of how many custom posts can be retrieved in the query.
+     * Override this value for specific custom post types
+     *
+     * @return integer
+     */
+    protected function getCustomPostListMaxLimit(): int
+    {
+        return ComponentConfiguration::getPostListMaxLimit();
     }
 
     public function getPosts(array $query, array $options = []): array
