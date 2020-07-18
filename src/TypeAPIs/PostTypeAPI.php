@@ -7,6 +7,7 @@ namespace PoP\PostsWP\TypeAPIs;
 use WP_Post;
 use function get_post;
 
+use PoP\Hooks\Facades\HooksAPIFacade;
 use PoP\Posts\ComponentConfiguration;
 use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
 use PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI;
@@ -16,6 +17,23 @@ use PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI;
  */
 class PostTypeAPI extends CustomPostTypeAPI implements PostTypeAPIInterface
 {
+    /**
+     * Add an extra hook just to modify posts
+     *
+     * @param [type] $query
+     * @param array $options
+     * @return array
+     */
+    protected function convertCustomPostsQuery(array $query, array $options = []): array
+    {
+        $query = parent::convertCustomPostsQuery($query, $options);
+        return HooksAPIFacade::getInstance()->applyFilters(
+            'CMSAPI:posts:query',
+            $query,
+            $options
+        );
+    }
+
     /**
      * Indicates if the passed object is of type Post
      *
