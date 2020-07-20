@@ -51,7 +51,7 @@ class PostTypeAPI extends CustomPostTypeAPI implements PostTypeAPIInterface
      * @param int $id
      * @return void
      */
-    public function getPost($id): ?object
+    public function getPost($id)
     {
         $post = get_post($id);
         if (!$post || $post->post_type != 'post') {
