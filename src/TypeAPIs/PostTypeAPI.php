@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace PoP\PostsWP\TypeAPIs;
+namespace PoPSchema\PostsWP\TypeAPIs;
 
 use WP_Post;
 use function get_post;
 
 use PoP\Hooks\Facades\HooksAPIFacade;
-use PoP\Posts\ComponentConfiguration;
-use PoP\Posts\TypeAPIs\PostTypeAPIInterface;
-use PoP\CustomPostsWP\TypeAPIs\CustomPostTypeAPI;
+use PoPSchema\Posts\ComponentConfiguration;
+use PoPSchema\Posts\TypeAPIs\PostTypeAPIInterface;
+use PoPSchema\CustomPostsWP\TypeAPIs\CustomPostTypeAPI;
 
 /**
  * Methods to interact with the Type, to be implemented by the underlying CMS
