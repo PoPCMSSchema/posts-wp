@@ -20,9 +20,9 @@ class PostTypeAPI extends CustomPostTypeAPI implements PostTypeAPIInterface
     /**
      * Add an extra hook just to modify posts
      *
-     * @param [type] $query
-     * @param array $options
-     * @return array
+     * @param array<string, mixed> $query
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>
      */
     protected function convertCustomPostsQuery(array $query, array $options = []): array
     {
